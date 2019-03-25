@@ -5,33 +5,76 @@ package rocks.zipcode.io.quiz3.arrays;
  */
 public class TicTacToe {
 
+    private String[][] board;
+
     public TicTacToe(String[][] board) {
+        this.board = board;
     }
 
     public TicTacToe() {
+        board = new String[0][0];
     }
 
     public String[] getRow(Integer value) {
-        return null;
+        return board[value];
     }
 
     public String[] getColumn(Integer value) {
-        return null;
+        return new String[]{board[0][value], board[1][value], board[2][value]};
     }
 
     public Boolean isRowHomogenous(Integer rowIndex) {
-        return null;
+        String[] row = getRow(rowIndex);
+        return isArrayHomogeneous(row);
+    }
+
+    public Boolean isArrayHomogeneous(String[] array) {
+        boolean homogenous = true;
+        for (int i = 1; i < array.length; i++) {
+            if (!array[i].equals(array[i-1])) {
+                homogenous = false;
+            }
+        }
+        return homogenous;
     }
 
     public Boolean isColumnHomogeneous(Integer columnIndex) {
-        return null;
+        String[] column = getColumn(columnIndex);
+        return isArrayHomogeneous(column);
+    }
+
+    public Boolean isDiag1Homogenous() {
+        String[] diag1 = {board[0][0], board[1][1], board[2][2]};
+        return isArrayHomogeneous(diag1);
+    }
+
+    public Boolean isDiag2Homogeneous() {
+        String[] diag2 = {board[2][0], board[1][1], board[0][2]};
+        return isArrayHomogeneous(diag2);
     }
 
     public String getWinner() {
-        return null;
+        String winner = "no winner";
+        for (int i = 0; i < board.length; i++) {
+            if (isRowHomogenous(i)) {
+                winner = board[i][0];
+            }
+        }
+        for (int i = 0; i < board.length; i++) {
+            if (isColumnHomogeneous(i)) {
+                winner = board[0][i];
+            }
+        }
+        if (isDiag1Homogenous()) {
+            winner = board[0][0];
+        }
+        if (isDiag2Homogeneous()) {
+            winner = board[0][2];
+        }
+        return winner;
     }
 
     public String[][] getBoard() {
-        return null;
+        return board;
     }
 }
